@@ -46,8 +46,70 @@ const titleClickHandler = function(event){
 
   }
   
+
+  /* Generate title list */
+
+  const optArticleSelector = '.post',
+  optTitleSelector = '.post-title',
+  optTitleListSelector = '.titles';
+
+function generateTitleLinks(){
+
+  /* [DONE] remove contents of titleList */
+
+  const titleList = document.querySelector(optTitleListSelector);
+
+  function clearTitleList(){
+	  titleList.innerHTML = '';
+}
+
+clearTitleList();
+
+  /* [DONE] for each article */
+
+  const articles = document.querySelectorAll('.post');
+
+  for(let article of articles){
+    article.classList.remove('active');
+  }
+
+  console.log('articles')
+
+  /* find all the articles and save them to variable: articles */
+
+  let html = '';
+
+  for(let article of articles){
+
+    /* [DONE] get the article id */
+
+    const articleId = article.getAttribute('id');
+
+    /* find the title element */
+
+    /* [DONE] get the title from the title element */
+
+    const articleTitle = article.querySelector(optTitleSelector).innerHTML;
+
+    /* create HTML of the link */
+    
+    const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+    console.log(linkHTML);
+
+    /* insert link into titleList */
+
+    html = html + linkHTML;
+    console.log('html');
+  }
+
+  titleList.innerHTML = html;
+
   const links = document.querySelectorAll('.titles a');
   
   for(let link of links){
     link.addEventListener('click', titleClickHandler);
   }
+  console.log(links);
+}
+
+generateTitleLinks();
