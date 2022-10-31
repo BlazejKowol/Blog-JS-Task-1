@@ -43,7 +43,6 @@ const titleClickHandler = function(event){
   /* [DONE] add class 'active' to the correct article */
 
   targetArticle.classList.add('active');
-
 };
 
 /* Generate title list */
@@ -59,11 +58,7 @@ function generateTitleLinks(){
 
   const titleList = document.querySelector(optTitleListSelector);
 
-  function clearTitleList(){
     titleList.innerHTML = '';
-  }
-
-  clearTitleList();
 
   /* [DONE] for each article */
 
@@ -133,16 +128,23 @@ function generateTags(){
 
     /* get tags from data-tags attribute */
 
-    const articleTags = articles.getAttribute('data-tags');
+    const articleTags = article.getAttribute('data-tags');
     console.log('Article Tags:', articleTags);
 
     /* split tags into array */
 
+    const articleTagsArray = articleTags.split(' ');
+    console.log('Array Article Tags:', articleTagsArray);
+
     /* START LOOP: for each tag */
+
+    for(let tag of articleTagsArray){
 
       /* generate HTML of the link */
 
       /* add generated code to html variable */
+
+    }
 
     /* END LOOP: for each tag */
 
