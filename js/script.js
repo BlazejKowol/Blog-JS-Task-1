@@ -23,12 +23,12 @@ const titleClickHandler = function(event){
   
   /* [DONE] remove class 'active' from all articles */
 
-  const activeArticles = document.querySelectorAll('.post a.active');
+  const activeArticles = document.querySelectorAll('.posts .active');
 
   for(let activeArticle of activeArticles){
     activeArticle.classList.remove('active');
   }
-  console.log(activeArticles);
+  console.log("Active Article:",activeArticles);
   
   /* [DONE] get 'href' attribute from the clicked link */
 
@@ -50,7 +50,8 @@ const titleClickHandler = function(event){
 
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
-  optTitleListSelector = '.titles';
+  optTitleListSelector = '.titles',
+  optArticleTagsSelector = '.post-tags .list';
 
 function generateTitleLinks(){
 
@@ -112,3 +113,42 @@ function generateTitleLinks(){
 }
 
 generateTitleLinks();
+
+function generateTags(){
+  /* find all articles */
+
+  const articles = document.querySelectorAll('.post');
+
+  /* START LOOP: for every article: */
+
+  for(let article of articles){}
+
+    /* find tags wrapper */
+
+    const tagsWrapper = article.querySelector(optArticleTagsSelector);
+
+    /* make html variable with empty string */
+
+    let html = '';
+
+    /* get tags from data-tags attribute */
+
+    const articleTags = articles.getAttribute('data-tags');
+    console.log('Article Tags:', articleTags);
+
+    /* split tags into array */
+
+    /* START LOOP: for each tag */
+
+      /* generate HTML of the link */
+
+      /* add generated code to html variable */
+
+    /* END LOOP: for each tag */
+
+    /* insert HTML of all the links into the tags wrapper */
+
+  /* END LOOP: for every article: */
+}
+
+generateTags();
