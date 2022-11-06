@@ -42,7 +42,7 @@ const titleClickHandler = function(event){
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
-  optTagsListSelector = '.tags list',
+  optTagsListSelector = '.tags.list', /*why this*/
   optArticleTagsSelector = '.post-tags .list',
   optArticleAuthorSelector = '.post-author';
 
@@ -146,20 +146,58 @@ function generateTags(){
 
       /* [DONE] END LOOP: for each tag */
 
-      }
+    }
 
     /* [DONE] insert HTML of all the links into the tags wrapper */
 
-      tagsWrapper.innerHTML = html;
+    tagsWrapper.innerHTML = html;
 
   /* [DONE] END LOOP: for every article: */
-    }
+  }
 
   /* [NEW] find list of tags in right column */
   const tagList = document.querySelector(optTagsListSelector);
+  console.log('tag list', tagList);
 
   /* [NEW] add html from allTags to tagList */
-  tagList.innerHTML = allTags.join(' ');
+  // tagList.innerHTML = allTags.join(' ');
+  console.log(allTags);
+
+  const tagsParams = calculateTagsParams(allTags);
+  console.log('tagsParams:', tagsParams);
+
+  /* [NEW] create variable for all links HTML code */
+let allTagsHTML = '';
+
+/* [NEW] START LOOP: for each tag in allTags: */
+for(let tag in allTags){
+  /* [NEW] generate code of a link and add it to allTagsHTML */
+  allTagsHTML += tag + ' (' + allTags[tag] + ') ';
+  console.log("All Tags HTML", allTagsHTML);
+/* [NEW] END LOOP: for each tag in allTags: */
+  }
+/*[NEW] add HTML from allTagsHTML to tagList */
+tagList.innerHTML = allTagsHTML;
+}
+const calculateTagsParams = function(tags) { /* why this and not function calculateTagsParams() {...}??*/
+
+  const params = {
+    max: 0,
+    min: 999999,
+  };
+
+  for(let tag in tags) {
+
+    if(tags[tag] > params.max){
+      params.max = tags[tag],
+      tags[tag] < params.min,
+      params.min = tags[tag];
+
+      console.log(tag + ' is used ' + tags[tag] + ' times ');
+    }
+  }
+  
+  return params; 
 }
 
 generateTags();
@@ -263,7 +301,7 @@ function generateAuthors(){
 
     /* [Can we use <p> here? Is it fine?] generate HTML of the link */
 
-    const linkAuthorHTML = '<p><a href=#author-' + articleAuthor + '">' + articleAuthor + '</a></p>';
+    const linkAuthorHTML = '<p><a href="#author-' + articleAuthor + '">' + articleAuthor + '</a></p>';
     console.log('Author Link: ', linkAuthorHTML);
 
     /* [Plz explain what exactly it does and why do we have to match it not with "html" but "linkAuthorHTML"] insert HTML of all the links into the authors wrapper */
