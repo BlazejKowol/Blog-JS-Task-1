@@ -44,7 +44,13 @@ const optArticleSelector = '.post',
   optTitleListSelector = '.titles',
   optTagsListSelector = '.tags.list', /*why this*/
   optArticleTagsSelector = '.post-tags .list',
-  optArticleAuthorSelector = '.post-author';
+  optArticleAuthorSelector = '.post-author',
+  optCloudClassCount = 5,
+  optCloudClassPrefix ='tag-size-',
+  normalizedCount = count - params.min,
+  normalizedMax = params.max - params.min,
+  percentage = normalizedCount / normalizedMax,
+  classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
 
 function generateTitleLinks(customSelector = ''){
   console.log('custom selector', customSelector);
@@ -96,6 +102,39 @@ function generateTitleLinks(customSelector = ''){
 }
 
 generateTitleLinks();
+
+const calculateTagsParams = function(tags) { /* why this and not function calculateTagsParams() {...}??*/
+
+  const params = {
+    max: 0,
+    min: 999999,
+  };
+
+  for(let tag in tags) {
+
+    /*if(tags[tag] > params.max){
+      params.max = tags[tag]} 
+      else {tags[tag] < params.min,
+      params.min = tags[tag];*/ /*what's wrong here*/
+
+      params.max = Math.max(tags[tag], params.max);
+      params.min = Math.min(tags[tag], params.min);
+
+      console.log(tag + ' is used ' + tags[tag] + ' times ');
+    //}
+  }
+  
+  return params; 
+}
+
+const calculateTagClass = function(count, params){ /*Why we're writing it like this and from where it goes? When did it appear in first place? */
+
+const tagLinkHTML = '<li>' + calculateTagClass(allTags[tag], tagsParams) + '</li>';
+console.log('tagLinkHTML:', tagLinkHTML);
+
+  return optCloudClassPrefix + classNumber;
+};
+
 
 function generateTags(){
   /* [NEW] create a new variable allTags with an empty object */
@@ -163,7 +202,7 @@ function generateTags(){
 
   /* [NEW] add html from allTags to tagList */
   // tagList.innerHTML = allTags.join(' ');
-  //console.log(allTags);
+  console.log(allTags);
 
   const tagsParams = calculateTagsParams(allTags);
   console.log('tagsParams:', tagsParams);
@@ -174,32 +213,12 @@ let allTagsHTML = '';
 /* [NEW] START LOOP: for each tag in allTags: */
   for(let tag in allTags){
     /* [NEW] generate code of a link and add it to allTagsHTML */
-    allTagsHTML += tag + ' (' + allTags[tag] + ') ';
+    allTagsHTML +='class="' + calculateTagClass + '"' + tag + ' (' + allTags[tag] + ') ';
     console.log("All Tags HTML", allTagsHTML);
     /* [NEW] END LOOP: for each tag in allTags: */
   }
   /*[NEW] add HTML from allTagsHTML to tagList */
   tagList.innerHTML = allTagsHTML;
-}
-const calculateTagsParams = function(tags) { /* why this and not function calculateTagsParams() {...}??*/
-
-  const params = {
-    max: 0,
-    min: 999999,
-  };
-
-  for(let tag in tags) {
-
-    if(tags[tag] > params.max){
-      params.max = tags[tag],
-      tags[tag] < params.min,
-      params.min = tags[tag];
-
-      console.log(tag + ' is used ' + tags[tag] + ' times ');
-    }
-  }
-  
-  return params; 
 }
 
 generateTags();
