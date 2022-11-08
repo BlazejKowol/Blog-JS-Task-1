@@ -121,20 +121,34 @@ body {
 
 .tag-size-1 {
   font-size: 12px;
+  color: red;
 }
 
 .tag-size-2 {
-  font-size: 15px;
+  font-size: 17px;
 }
 
 .tag-size-3 {
-  font-size: 18px;
+  font-size: 22px;
 }
 
 .tag-size-4 {
-  font-size: 25px;
+  font-size: 28px;
 }
 
 .tag-size-5 {
-  font-size: 32px;
+  font-size: 35px; 
+}
+
+.tag-size-6 {
+  font-size: 45px;
+  color: green;
+}
+
+.tags.list {
+  li {
+    display: inline-block;
+    padding: 2px;
+    margin: 2px;
+  }
 }

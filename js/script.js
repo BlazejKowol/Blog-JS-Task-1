@@ -2,9 +2,10 @@ const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
   optTagsListSelector = '.tags.list',
+  optAuthorsListSelector = '.authors.list',
   optArticleTagsSelector = '.post-tags .list',
   optArticleAuthorSelector = '.post-author',
-  optCloudClassCount = 5,
+  optCloudClassCount = 6,
   optCloudClassPrefix ='tag-size-';
 
 const titleClickHandler = function(event){
@@ -47,7 +48,6 @@ const titleClickHandler = function(event){
 };
 
 function generateTitleLinks(customSelector = ''){
-  console.log('custom selector', customSelector);
 
   /* [DONE] remove contents of titleList */
 
@@ -165,10 +165,11 @@ function generateTags(){
       /* [DONE] generate HTML of the link */
 
       const linkTagHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+      console.log('linkTagHTML: ', linkTagHTML)
 
       /* [DONE] add generated code to html variable */
 
-      html = html + linkTagHTML + ' ';
+      html = html + linkTagHTML + ', ';
 
       /* [NEW] check if this link is NOT already in allTags */
       if(!allTags[tag]){
@@ -295,6 +296,10 @@ function addClickListenersToTags(){
 }
 
 function generateAuthors(){
+  /* [NEW] create a new variable allAuthors with an empty object */
+
+  const allAuthors = {};
+
   /* [DONE] find all articles */
 
   const articles = document.querySelectorAll(optArticleSelector);
@@ -313,17 +318,50 @@ function generateAuthors(){
     const articleAuthor = article.getAttribute('data-author');
     console.log('article Author: ', articleAuthor);
 
-    /* [Can we use <p> here? Is it fine?] generate HTML of the link */
+    /* [DONE] generate HTML of the link */
 
-    const linkAuthorHTML = '<p><a href="#author-' + articleAuthor + '">' + articleAuthor + '</a></p>';
-    console.log('Author Link: ', linkAuthorHTML);
+    const linkAuthorHTML = '<a href="#author-' + articleAuthor + '">' + articleAuthor + '</a>';
+    console.log('Link Author HTML: ', linkAuthorHTML);
 
-    /* [Plz explain what exactly it does and why do we have to match it not with "html" but "linkAuthorHTML"] insert HTML of all the links into the authors wrapper */
+    /* [DONE] insert HTML of all the links into the authors wrapper */
 
     authorWrapper.innerHTML = linkAuthorHTML;
 
+    /* [NEW] check if this link is NOT already in allAuthors */
+    if(!allAuthors[articleAuthor]) {
+      /* [NEW] add author to allAuthors object */
+      allAuthors[articleAuthor] = 1;
+    } else {
+      allAuthors[articleAuthor]++;
+    }
+
   /* [DONE] END LOOP: for every article: */
     }
+
+  /* [NEW] find list of authors in right column */
+    const authorsList = document.querySelector(optAuthorsListSelector);
+    console.log('authors list: ',authorsList)
+
+    //authorsList.innerHTML = allAuthors.join(' ');
+    console.log('all authors', allAuthors);
+  
+    /* [NEW] create variable for all links HTML code */
+    let allAuthorsHTML = '';
+  
+    /* [NEW] START LOOP: for each author in allAuthors: */
+    for(let articleAuthor in allAuthors){
+
+      /* [NEW] generate code of a link and add it to allAuthorsHTML */
+  
+      const authorLinkHTML = '<li><a href="#author-' + articleAuthor + '">' + articleAuthor + ' ' + '(' + allAuthors[articleAuthor] + ')' + '</a></li>';
+      console.log('authorLinkHTML:', authorLinkHTML);
+    
+       allAuthorsHTML += authorLinkHTML; //'<li><a href="#author-Marion Berry">Marion Berry 4</a></li>';
+       console.log('All Authors HTML', allAuthorsHTML);
+      /* [NEW] END LOOP: for each author in allAuthors: */
+    }
+    /*[NEW] add HTML from allAuthorsHTML to authorsList */
+      authorsList.innerHTML = allAuthorsHTML;
 }
 
 function authorClickHandler(event){
